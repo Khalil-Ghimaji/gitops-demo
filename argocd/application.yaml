@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: web-demo
+  namespace: argocd
+spec:
+  project: default
+  source:
+    # TODO : remplacer par l'URL de TON dépôt
+    repoURL: https://github.com/Khalil-Ghimaji/gitops-demo
+    targetRevision: main
+    path: k8s/overlays/dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo
+  syncPolicy:
+    automated:
+      prune: true      # supprime du cluster ce qui n'est plus dans Git
+      selfHeal: true   # corrige toute modification manuelle (drift)
+    syncOptions:
+      - CreateNamespace=true
+  revisionHistoryLimit: 10
