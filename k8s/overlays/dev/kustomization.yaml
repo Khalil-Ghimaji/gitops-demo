@@ -5,7 +5,7 @@ resources:
   - ../../base
 replicas:
   - name: web
-    count: 2
+    count: 4
 images:
   - name: nginx
     newTag: 1.27-alpine
